@@ -10,6 +10,7 @@ const Button = (props) => {
 const Display = (props) => {
     return (
         <div className='results'>
+            <h1>Statistics</h1>
             <p>Good: { props.good }</p>
             <p>Neutral: { props.neutral }</p>
             <p>Bad: { props.bad }</p>
@@ -48,7 +49,6 @@ const App = (props) => {
                 setAverage(average - 1);
                 }} text='Bad' />
 
-            <h1>Statistics</h1>
             <Display 
                 good={good} 
                 neutral={neutral} 
