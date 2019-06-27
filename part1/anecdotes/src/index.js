@@ -5,6 +5,7 @@ import './index.css';
 const App = (props) => {
   const [selected, setSelected] = useState(0);
   const [votes, setVotes] = useState(Array(anecdotes.length).fill(0));
+  const [max, setMax] = useState(0);
 
   const handleClick = () => {
     let random = Math.floor(Math.random() * (anecdotes.length));
@@ -12,19 +13,37 @@ const App = (props) => {
   }
 
   const handleVotes = () => {
-      const copy = [...votes];
-      copy[selected] += 1;
-      setVotes(copy);
+    const copy = [...votes];
+    copy[selected] += 1;
+    setVotes(copy);
+    
+  }
+
+  const MostVotes = () => {
+    const maxVotes = votes.indexOf(Math.max(...votes));
+    setMax(maxVotes);
+    return (
+        <div>
+            <h1>Anecdote with the most votes</h1>
+            {props.anecdotes[max]}
+            <br/>
+            <p>Has {votes[max]} votes</p>
+        </div>
+    )
   }
 
   return (
     <div>
-      {props.anecdotes[selected]}
-      <br/>
-      {votes[selected]}
-      <br />
-      <button onClick={ () => handleVotes() }>Vote</button>
-      <button onClick={ () => handleClick() }>Next anecdote</button>
+        <h1>Anecdote of the day</h1>
+        {props.anecdotes[selected]}
+        <br/>
+        <p>Has {votes[selected]} votes</p>
+        <br/>
+        <button onClick={ () => handleVotes() }>Vote</button>
+        <button onClick={ () => handleClick() }>Next anecdote</button>
+
+        <MostVotes />
+
     </div>
   )
 }
