@@ -7,19 +7,36 @@ const Button = (props) => {
     )
 }
 
-const Display = (props) => {
+const Statistic = (props) => {
+    return (
+        <tr>
+            <td>{props.text}</td>
+            <td>{props.value}</td>
+        </tr>
+    )
+}
+
+const Statistics = (props) => {
     if(props.total === 0) {
         return <p>No feedback given</p>
     } else {
         return (
             <div className='results'>
-                <h1>Statistics</h1>
-                <p>Good: { props.good }</p>
-                <p>Neutral: { props.neutral }</p>
-                <p>Bad: { props.bad }</p>
-                <p>Total: { props.total }</p>
-                <p>Average: { props.average }</p>
-                <p>Positive: { props.positive } %</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <td><h1>Statistics</h1></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <Statistic text="Good" value={ props.good } />
+                        <Statistic text="Neutral" value={ props.neutral } />
+                        <Statistic text="Bad" value={ props.bad } />
+                        <Statistic text="Total" value={ props.total } />
+                        <Statistic text="Average" value={ props.average } />
+                        <Statistic text="Positive" value={ props.positive } />
+                    </tbody>
+                </table>
             </div>
         )
     }
@@ -53,7 +70,7 @@ const App = (props) => {
                 setAverage(average - 1);
                 }} text='Bad' />
 
-            <Display 
+            <Statistics 
                 good={good} 
                 neutral={neutral} 
                 bad={bad} 
