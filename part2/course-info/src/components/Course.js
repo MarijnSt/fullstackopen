@@ -1,12 +1,18 @@
 import React from 'react';
-import Header from './Header';
-import Content from './Content';
+import Subcomponents from './Subcomponents';
 
 const Course = ({course}) => {
+    const display = () => course.map(info => {
+        return (
+            <div key={info.id}>
+                <Subcomponents info={info}/>
+            </div>
+        )
+    })
+
     return (
     <div>
-        <Header name={course.name}/>
-        <Content parts={course.parts}/>
+        {display()}
     </div>
     );
 }
