@@ -8,6 +8,14 @@ const App = () => {
 
   const addContact = (event) => {
     event.preventDefault();
+    //check name
+    let originalArr = persons
+    for (let person of originalArr) {
+      if( person.name.toLowerCase().includes(newName.toLowerCase()) ){
+        return alert(`${newName} is already added to the phonebook`)
+      } 
+    }
+    //add name
     const personObject = {
         name: newName
     }
@@ -19,7 +27,6 @@ const App = () => {
     setNewName(event.target.value);
   }
 
-  //object weergeven
   const numbers = () => persons.map(person =>
     <p key={person.name}>{person.name}</p>
     )
@@ -27,7 +34,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={() => addContact}>
+      <form onSubmit={addContact}>
         <div>
           name: 
           <input
@@ -36,7 +43,7 @@ const App = () => {
           />
         </div>
         <div>
-          <button type="submit" onClick={addContact}>add</button>
+          <button type="submit">add</button>
         </div>
       </form>
       <h2>Numbers</h2>
