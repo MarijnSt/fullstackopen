@@ -1,4 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import Filter from './components/Filter';
+import PersonForm from './components/PersonForm';
+import Persons from './components/Persons'
 
 const App = () => {
   const [ persons, setPersons] = useState([
@@ -6,10 +9,10 @@ const App = () => {
     { name: 'Ada Lovelace', number: '39-44-5323523' },
     { name: 'Dan Abramov', number: '12-43-234345' },
     { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ]) 
-  const [ newName, setNewName ] = useState('')
-  const [ newNumber, setNewNumber] = useState('')
-  const [ newFilter, setFilter] = useState('')
+  ]);
+  const [ newName, setNewName ] = useState('');
+  const [ newNumber, setNewNumber] = useState('');
+  const [ newFilter, setFilter] = useState('');
 
   const addContact = (event) => {
     event.preventDefault();
@@ -28,51 +31,33 @@ const App = () => {
     setPersons(persons.concat(personObject));
     setNewName('');
     setNewNumber('');
-  }
-
-  const handleChangeName = (event) => { setNewName(event.target.value); }
-
-  const handleChangeNumber = (event) => { setNewNumber(event.target.value); }
-
-  const numbers = () => searchresults.map(person => <p key={person.name}>{person.name}: {person.number}</p>)
-
-  const search = (event) => { setFilter(event.target.value.toLowerCase()) }
-
-  const searchresults = persons.filter(person => person.name.toLowerCase().includes(newFilter))
+  };
+  const handleChangeName = (event) => { setNewName(event.target.value) };
+  const handleChangeNumber = (event) => { setNewNumber(event.target.value) };
+  const search = (event) => { setFilter(event.target.value.toLowerCase()) };
+  const searchresults = persons.filter(person => person.name.toLowerCase().includes(newFilter));
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <form>
-        Filter shown with
-        <input
-          value={newFilter}
-          onChange={search}
-        />
-      </form>
-      <form onSubmit={addContact}>
-        <div>
-          name: 
-          <input
-            value={newName}
-            onChange={handleChangeName}
-          />
-        </div>
-        <div>
-          number:
-          <input 
-            value={newNumber}
-            onChange={handleChangeNumber}
-          />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      {numbers()}
+      <Filter 
+        filter={newFilter} 
+        change={search}
+      />
+
+      <h3>Add a new</h3>
+      <PersonForm 
+        submit={addContact} 
+        name={newName} 
+        number={newNumber} 
+        changeName={handleChangeName} 
+        changeNumber={handleChangeNumber}
+      />
+      
+      <h3>Numbers</h3>
+      <Persons search={searchresults}/>
     </div>
-  )
-}
+  );
+};
 
 export default App
