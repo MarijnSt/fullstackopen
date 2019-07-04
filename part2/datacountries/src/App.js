@@ -20,10 +20,14 @@ const App = () => {
     setNewFilter(e.target.value.toLowerCase())
   }
 
+  const handleClick = (e) => {
+    setNewFilter(e.target.previousSibling.textContent.toLowerCase())
+}
+
   return (
     <div>
       <Search filter={newFilter} change={handleChange}/>
-      <Results filter={newFilter} list={countries}/>
+      <Results filter={newFilter} list={countries} klik={handleClick}/>
     </div>
   )
 }

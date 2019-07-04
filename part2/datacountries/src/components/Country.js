@@ -1,20 +1,19 @@
 import React from 'react'
 
 const Country = ({country}) => {
-    const detail = country[0]
     const languages = () => {
-        const lan = detail.languages
+        const lan = country.languages
         return lan.map(language => <li key={language.name}>{language.name}</li>)
         
     }
     return (
         <div>
-            <h2>{detail.name}</h2>
-            <p>Capital: {detail.capital}</p>
-            <p>Population: {detail.population}</p>
+            <h2>{country.name}</h2>
+            <p>Capital: {country.capital}</p>
+            <p>Population: {country.population}</p>
             <h3>Languages</h3>
             <ul>{languages()}</ul>
-            <img src={detail.flag} alt="flag"/>
+            <img src={country.flag} alt="flag"/>
         </div>
     )
 }
