@@ -17,13 +17,12 @@ const Weather = ({country}) => {
         })
     }, [])
 
-    console.log(weather.condition)    
-
     return (
         <div>
             <h3>Weather in {country.capital}</h3>
             <p>Temperature: {weather.temp_c} °C</p>
             <img src={url} />
+            <p>Wind: {weather.wind_kph} kph direction {weather.wind_dir} </p>
         </div>
     )
 }
