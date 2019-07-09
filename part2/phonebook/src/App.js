@@ -39,10 +39,18 @@ const App = () => {
         setNewNumber('');
       })
   };
+
   const handleChangeName = (event) => { setNewName(event.target.value) };
   const handleChangeNumber = (event) => { setNewNumber(event.target.value) };
   const search = (event) => { setFilter(event.target.value.toLowerCase()) };
   const searchresults = persons.filter(person => person.name.toLowerCase().includes(newFilter));
+  const deletePerson = (event) => {
+    const deleteId = parseInt(event.target.id)
+    Service
+      .remove(deleteId)
+    const newList = persons.filter(person => person.id !== deleteId)
+    setPersons(newList)
+  }
 
   return (
     <div>
@@ -62,7 +70,10 @@ const App = () => {
       />
       
       <h3>Numbers</h3>
-      <Persons search={searchresults}/>
+      <Persons 
+        search={searchresults} 
+        remove={deletePerson}
+      />
     </div>
   );
 };

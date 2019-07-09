@@ -1,8 +1,11 @@
 import React from 'react'
 
-const Persons = ({search}) => {
+const Persons = ({search, remove}) => {
     const numbers = () => search.map(person => 
-        <p>{person.name}: {person.number}</p>
+        <div key={person.name}>
+            <p>{person.name}: {person.number}</p>
+            <button onClick={remove} id={person.id}>delete</button>
+        </div>
     )
 
     return (
