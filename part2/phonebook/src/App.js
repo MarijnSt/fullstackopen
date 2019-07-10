@@ -16,19 +16,36 @@ const App = () => {
       .then(initialPersons => setPersons(initialPersons))
   }, [])
 
-  const addContact = (event) => {
-    event.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault()
     //check name
     let originalArr = persons
-    for (let person of originalArr) {
-      if( person.name.toLowerCase().includes(newName.toLowerCase()) ){
-        return alert(`${newName} is already added to the phonebook`)
-      } 
+    let match = false
+    let updateId = 0;
+    for(let person of originalArr) {
+      if(person.name.toLowerCase().includes(newName.toLowerCase())){
+        match = true
+        updateId = person.id
+        break
+      } else {
+        match = false
+      }
     }
-    //add name
+    
+    if(match){
+      //update or reject
+      updateReject(updateId)
+    } else {
+      //add
+      addContact()
+    }
+  }
+
+  const addContact = () => {
+        //add name
     const personObject = {
-        name: newName,
-        number: newNumber
+      name: newName,
+      number: newNumber
     }
 
     Service
@@ -38,7 +55,23 @@ const App = () => {
         setNewName('');
         setNewNumber('');
       })
+    
   };
+
+  const updateReject = (id) => {
+    const result = window.confirm(`${newName} is already added to the phonebook, replace old number with new one?`)
+    if(result){
+      const updatePerson = persons.find(n => n.id === id)
+      const changedPerson = {...updatePerson, number: newNumber}
+      Service
+         .update(id, changedPerson)
+         .then(returnedPerson => {
+          setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
+         })
+    } else {
+      return
+    }
+  }
 
   const handleChangeName = (event) => { setNewName(event.target.value) };
   const handleChangeNumber = (event) => { setNewNumber(event.target.value) };
@@ -69,7 +102,7 @@ const App = () => {
 
       <h3>Add a new</h3>
       <PersonForm 
-        submit={addContact} 
+        submit={handleSubmit} 
         name={newName} 
         number={newNumber} 
         changeName={handleChangeName} 
