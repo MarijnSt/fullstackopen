@@ -96,9 +96,19 @@ const App = () => {
     const result = window.confirm(`Delete ${deletedPerson}?`)
     if(result) {
       const deleteId = parseInt(event.target.id)
-      Service.remove(deleteId)
-      const newList = persons.filter(person => person.id !== deleteId)
-      setPersons(newList)
+      Service
+        .remove(deleteId)
+        .then(
+          setPersons(persons.filter(person => person.id !== deleteId))
+        )
+        .catch(error => {
+          setErrorMessage(`${deletedPerson} has already been removed from the server`)
+          setPersons(persons.filter(person => person.id !== deleteId))
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+        })
+      
     } else {
       return
     }
